@@ -38,7 +38,7 @@ export const CustomerList = () => {
         {
             firstFiveCustomers.map(
                 (customerObject) => {
-                    return <h2 key={`customer--${customerObject.id}`}>{customerObject.name}</h2>
+                    return <p key={`customer--${customerObject.id}`}>{customerObject.name}</p>
                 }
             )
         }

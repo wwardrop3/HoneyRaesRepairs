@@ -3,13 +3,11 @@ import React, {useEffect, useState} from "react";
 export const TicketList = () => {
     const [serviceTickets, setServiceTickets] = useState([]) //creates an empty app state array for employees
    
-    const [specialtyMessage, updateSpecialtyString] = useState("")
-
 
 
     useEffect( //use effect watches for changes, and executes when changes are made
         () => {
-            fetch("http://localhost:8088/serviceTickets")
+            fetch("http://localhost:8088/serviceTickets?_expand=employee&_expand=customer") //expand adds employee and customer properties that equal the object that matches customerId and employeeId
             .then(res => res.json())
             .then(
                 (serviceTickets) => {
@@ -17,16 +15,16 @@ export const TicketList = () => {
                 } 
             )
         },
-        [serviceTickets] //this is where useEffect is listening for changes
+        [] //this is where useEffect is listening for changes
     )
-
-
+    // 
+   
     return (
     <>
-    <h1>Service Ticket List</h1>
     {
         serviceTickets.map(serviceTicketObject => {
-            return <h2 key = {`serviceTicket--${serviceTicketObject.id}`}>{serviceTicketObject.description}</h2>
+            return <p key = {`serviceTicket--${serviceTicketObject.id}`}>{serviceTicketObject.description} Submitted by {serviceTicketObject.customer.name} and worked on by {serviceTicketObject.employee.name}</p>
+                
         })
     }
     </>
