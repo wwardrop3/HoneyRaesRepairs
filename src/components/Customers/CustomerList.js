@@ -34,6 +34,7 @@ export const CustomerList = () => {
 
     return (
         <>
+        <h2>Customer List</h2>
         <div>{totalCustomerMessage}</div>
         {
             firstFiveCustomers.map(

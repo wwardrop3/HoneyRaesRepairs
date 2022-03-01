@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {React, useEffect, useState} from "react";
 
 export const EmployeeList = () => {
     const [employees, setEmployees] = useState([]) //creates an empty app state array for employees
@@ -40,7 +40,9 @@ export const EmployeeList = () => {
 
     return (
     <>
+    <h2>Employee List</h2>
     <div>Specialties: {specialtyMessage}</div>
+    <p></p>
     <div>{totalEmployeeMessage}</div>
     {
         employees.map(employeeObject => {
