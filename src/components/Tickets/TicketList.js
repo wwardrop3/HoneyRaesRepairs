@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import "./Tickets.css"
 
 export const TicketList = () => {
     const [serviceTickets, setServiceTickets] = useState([]) //creates an empty app state array for employees
@@ -22,7 +23,7 @@ export const TicketList = () => {
     useEffect(
         () => {
             const openTickets = serviceTickets.filter(serviceTicket => {
-                return serviceTicket.dateCompleted != ""
+                return serviceTicket.dateCompleted === " "
             })
 
             const ticketString = `There are ${openTickets.length} tickets currently open`
@@ -31,22 +32,26 @@ export const TicketList = () => {
             createOpenTicketsString(ticketString)
         },[serviceTickets]
         )
-    
+
+
     useEffect(
         () => {
             const serviceTicketStrings = serviceTickets.map(serviceTicketObject => {
-                return <p key = {`serviceTicket--${serviceTicketObject.id}`}>{serviceTicketObject.description} Submitted by {serviceTicketObject.customer.name} and worked on by {serviceTicketObject.employee.name}</p>
-        })
+            return <p className={serviceTicketObject.emergency ? "emergency" : "ticket"}>
+                        {serviceTicketObject.emergency ? "🚑 " : ""} {serviceTicketObject.description} Submitted by {serviceTicketObject.customer.name} and worked on by {serviceTicketObject.employee.name}
+                    </p>
+    })
         createUniqueTicketString(serviceTicketStrings)
         },
-        [])
+        [serviceTickets])
    
     return (
     <>
     {
         <div>
-            <p>{openTicketsString}</p>
-            <p>{uniqueTicketString}</p>
+            <h2>Ticket List</h2>
+            <div>{openTicketsString}</div>
+            <div>{uniqueTicketString}</div>
         </div>
         
     }

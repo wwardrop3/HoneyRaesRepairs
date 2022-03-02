@@ -10,7 +10,7 @@ export const Repairs = () => (
   <>
     <Route
       render={() => {
-        if (localStorage.getItem("honey_customer")) {
+        if (localStorage.getItem("honey_customer")) { //if the customer exists
           return (
             <>
               <NavBar />
@@ -18,7 +18,7 @@ export const Repairs = () => (
             </>
           );
         } else {
-          return <Redirect to="/login"/>;
+          return <Redirect to="/login"/>; //if the customer does not exist, goes to login component
         }
       }}
     />
