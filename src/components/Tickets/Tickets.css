@@ -1,7 +1,14 @@
 .emergency{
     background-color: lightcoral;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .ticket{
     background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
+

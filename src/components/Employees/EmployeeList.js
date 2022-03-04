@@ -1,4 +1,6 @@
 import {React, useEffect, useState} from "react";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const EmployeeList = () => {
     const [employees, setEmployees] = useState([]) //creates an empty app state array for employees
@@ -6,6 +8,7 @@ export const EmployeeList = () => {
     const [specialtyMessage, updateSpecialtyString] = useState("")
 
 
+    const history = useHistory()
 
     useEffect( //use effect watches for changes, and executes when changes are made
         () => {
@@ -41,12 +44,19 @@ export const EmployeeList = () => {
     return (
     <>
     <h2>Employee List</h2>
+    <button
+    onClick={
+        (evt) => {
+            history.push("/employees/create")
+        }
+    }>Hire Employee</button>
+    <p></p>
     <div>Specialties: {specialtyMessage}</div>
     <p></p>
     <div>{totalEmployeeMessage}</div>
     {
         employees.map(employeeObject => {
-            return <p key = {`employee--${employeeObject.id}`}>{employeeObject.name}</p>
+            return <p key = {`employee--${employeeObject.id}`}><Link to = {`/employees/${employeeObject.id}`}>{employeeObject.name}</Link></p>
         })
     }
     </>

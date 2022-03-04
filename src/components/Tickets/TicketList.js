@@ -1,4 +1,7 @@
 import React, {useEffect, useState} from "react";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
 import "./Tickets.css"
 
 export const TicketList = () => {
@@ -6,6 +9,7 @@ export const TicketList = () => {
     const [openTicketsString, createOpenTicketsString] = useState("")
     const [uniqueTicketString, createUniqueTicketString] = useState("")
 
+    const history = useHistory()
 
     useEffect( //use effect watches for changes, and executes when changes are made
         () => {
@@ -37,24 +41,50 @@ export const TicketList = () => {
     useEffect(
         () => {
             const serviceTicketStrings = serviceTickets.map(serviceTicketObject => {
-            return <p className={serviceTicketObject.emergency ? "emergency" : "ticket"}>
-                        {serviceTicketObject.emergency ? "🚑 " : ""} {serviceTicketObject.description} Submitted by {serviceTicketObject.customer.name} and worked on by {serviceTicketObject.employee.name}
+            return <p key = {serviceTicketObject.id} className={serviceTicketObject.emergency ? "emergency" : "ticket"}>
+                        <Link to = {`/ticketList/${serviceTicketObject.id}`}>{serviceTicketObject.emergency ? "🚑 " : ""} {serviceTicketObject.description} submitted by {serviceTicketObject.customer.name}</Link>
+                    <button
+                    onClick={
+                        (evt) => {
+                            deleteTicket(serviceTicketObject.id)
+                            window.location.reload(false)       
+                        
+                            
+                        } 
+                    }
+                    >Delete Ticket</button>
                     </p>
     })
         createUniqueTicketString(serviceTicketStrings)
         },
         [serviceTickets])
+
+    const deleteTicket = (id) =>{
+        const fetchOptions={
+            method: "DELETE",
+        }
+        console.log(id)
+        return fetch(`http://localhost:8088/serviceTickets/${id}`, fetchOptions)
+    }
    
     return (
     <>
-    {
+    
         <div>
+            <button 
+            onClick = {
+                (evt) => {
+                    history.push("./ticketList/create")
+                }
+            }
+            >Submit Service Ticket</button>
             <h2>Ticket List</h2>
             <div>{openTicketsString}</div>
-            <div>{uniqueTicketString}</div>
+                <div className="ticketList">{uniqueTicketString}</div>
+    
         </div>
         
-    }
+
     </>
     )
 }

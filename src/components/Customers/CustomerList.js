@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react"
 
+
+//component purpose is to render a string of how many customers we have and first 5 strings of each customer name
+
 export const CustomerList = () => {
     const [customers, setCustomers] = useState([]) //initialization counts as the first state change
     const [totalCustomerMessage, updateMessage] = useState("")
@@ -20,10 +23,10 @@ export const CustomerList = () => {
         [] //what to listen for, only runs once becuase it is empty
     )
 
+    //this useEffect is going to update a string that keeps track of how many customers are in the database
     useEffect(
         () => {
-            console.log("stateChanged", customers)
-            if(firstFiveCustomers.length === 1){
+            if(customers.length === 1){
                 updateMessage("You have 1 customer")
             } 
             else {
@@ -37,7 +40,7 @@ export const CustomerList = () => {
         <h2>Customer List</h2>
         <div>{totalCustomerMessage}</div>
         {
-            firstFiveCustomers.map(
+            customers.map(
                 (customerObject) => {
                     return <p key={`customer--${customerObject.id}`}>{customerObject.name}</p>
                 }
